@@ -16,7 +16,7 @@ body{
   align-items:center;
 }
 .app{
-  width:720px;
+  width:760px;
   background:#fff;
   padding:30px;
   border-radius:25px;
@@ -90,13 +90,12 @@ h1{text-align:center;color:#2563eb}
 <!-- 🎵 BACKSOUND LOKAL -->
 <audio id="bgm" loop>
   <source src="musik.mp3" type="audio/mpeg">
-  Browser tidak mendukung audio.
 </audio>
 
 <div class="app" id="app">
   <h1>🌈 Tes Bakat & Minat Anak 🌈</h1>
   <div class="start">
-    <p>Tekan tombol untuk mulai tes 😊</p>
+    <p>Jawab dengan jujur ya 😊</p>
     <button onclick="startTest()">▶️ Mulai Tes</button><br><br>
     <button class="music-btn" onclick="toggleMusic()">🔊 Musik ON / OFF</button>
   </div>
@@ -108,8 +107,6 @@ const bgm = document.getElementById("bgm");
 function toggleMusic(){
   bgm.paused ? bgm.play() : bgm.pause();
 }
-
-let index = 0;
 
 const scores = {
   "Bahasa & Komunikasi":0,
@@ -124,14 +121,16 @@ const scores = {
 
 const advice = {
   "Bahasa & Komunikasi":"Latih membaca, bercerita, dan berbicara di depan kelas.",
-  "Logika & Matematika":"Ajak bermain teka-teki, berhitung, dan permainan logika.",
-  "Visual & Seni Rupa":"Sediakan alat gambar, mewarnai, dan kerajinan.",
-  "Musik & Ritme":"Dukung bernyanyi, alat musik, dan permainan irama.",
-  "Gerak & Olahraga":"Arahkan ke olahraga dan aktivitas fisik rutin.",
+  "Logika & Matematika":"Ajak bermain teka-teki dan berhitung.",
+  "Visual & Seni Rupa":"Sediakan alat gambar dan kerajinan.",
+  "Musik & Ritme":"Ajak bernyanyi dan bermain alat musik.",
+  "Gerak & Olahraga":"Dukung aktivitas fisik dan olahraga.",
   "Sosial & Kepemimpinan":"Latih memimpin kelompok kecil.",
-  "Empati & Kepedulian":"Biasakan berbagi dan peduli pada teman.",
+  "Empati & Kepedulian":"Biasakan berbagi dan menolong teman.",
   "Mekanik & Teknologi":"Kenalkan lego, eksperimen, dan teknologi sederhana."
 };
+
+let index = 0;
 
 const questions = [
 {q:"Saat waktu luang di sekolah, aku lebih suka:",o:{
@@ -154,7 +153,7 @@ const questions = [
 }},
 {q:"Jika melihat teman sedih, aku:",o:{
  A:["Menanyakan keadaannya","Empati & Kepedulian"],
- B:["Mengajaknya bermain","Sosial & Kepemimpinan"],
+ B:["Menghibur","Sosial & Kepemimpinan"],
  C:["Pergi bermain","Gerak & Olahraga"],
  D:["Diam saja","Logika & Matematika"]
 }},
@@ -186,7 +185,7 @@ const questions = [
  A:["Kreatif","Visual & Seni Rupa"],
  B:["Penuh irama","Musik & Ritme"],
  C:["Banyak bergerak","Gerak & Olahraga"],
- D:["Penuh cerita","Bahasa & Komunikasi"]
+ D:["Banyak bicara","Bahasa & Komunikasi"]
 }},
 {q:"Aku tertarik belajar tentang:",o:{
  A:["Cerita","Bahasa & Komunikasi"],
@@ -205,10 +204,52 @@ const questions = [
  B:["Bisa memimpin","Sosial & Kepemimpinan"],
  C:["Bisa membuat sesuatu","Mekanik & Teknologi"],
  D:["Bisa bercerita","Bahasa & Komunikasi"]
+}},
+{q:"Aku lebih suka tugas yang:",o:{
+ A:["Menghitung","Logika & Matematika"],
+ B:["Menggambar","Visual & Seni Rupa"],
+ C:["Bernyanyi","Musik & Ritme"],
+ D:["Berlari","Gerak & Olahraga"]
+}},
+{q:"Aku suka membantu dengan cara:",o:{
+ A:["Mendengarkan","Empati & Kepedulian"],
+ B:["Mengatur","Sosial & Kepemimpinan"],
+ C:["Memperbaiki","Mekanik & Teknologi"],
+ D:["Menjelaskan","Bahasa & Komunikasi"]
+}},
+{q:"Aku paling bersemangat saat:",o:{
+ A:["Lomba olahraga","Gerak & Olahraga"],
+ B:["Lomba menggambar","Visual & Seni Rupa"],
+ C:["Lomba berhitung","Logika & Matematika"],
+ D:["Lomba menyanyi","Musik & Ritme"]
+}},
+{q:"Aku sering bertanya tentang:",o:{
+ A:["Cara kerja alat","Mekanik & Teknologi"],
+ B:["Cerita","Bahasa & Komunikasi"],
+ C:["Perasaan teman","Empati & Kepedulian"],
+ D:["Aturan permainan","Logika & Matematika"]
+}},
+{q:"Aku senang bermain dengan:",o:{
+ A:["Teman banyak","Sosial & Kepemimpinan"],
+ B:["Alat musik","Musik & Ritme"],
+ C:["Bola","Gerak & Olahraga"],
+ D:["Kertas gambar","Visual & Seni Rupa"]
+}},
+{q:"Aku merasa hebat jika:",o:{
+ A:["Bisa memimpin","Sosial & Kepemimpinan"],
+ B:["Bisa menolong","Empati & Kepedulian"],
+ C:["Bisa menghitung cepat","Logika & Matematika"],
+ D:["Bisa membuat alat","Mekanik & Teknologi"]
+}},
+{q:"Aku senang belajar melalui:",o:{
+ A:["Cerita","Bahasa & Komunikasi"],
+ B:["Angka","Logika & Matematika"],
+ C:["Gambar","Visual & Seni Rupa"],
+ D:["Gerakan","Gerak & Olahraga"]
 }}
 ];
 
-// acak soal
+// random soal
 questions.sort(()=>Math.random()-0.5);
 
 function startTest(){
@@ -237,7 +278,7 @@ function loadQuestion(){
     opt.appendChild(d);
   }
   document.getElementById("bar").style.width =
-    (index/questions.length*100)+"%";
+    ((index)/questions.length*100)+"%";
 }
 
 function selectAnswer(cat){
@@ -256,11 +297,11 @@ function showResult(){
     <canvas id="chart"></canvas>
 
     <div class="section good">
-      ⭐ <b>Bakat Dominan:</b><br>${best}
+      ⭐ <b>Kelebihan Utama:</b><br>${best}
     </div>
 
     <div class="section warn">
-      ⚠️ <b>Perlu Dikembangkan:</b><br>${worst}
+      ⚠️ <b>Perlu Ditingkatkan:</b><br>${worst}
     </div>
 
     <div class="section info">
@@ -278,7 +319,7 @@ function showResult(){
         borderColor:"#2563eb"
       }]
     },
-    options:{scales:{r:{beginAtZero:true}}}
+    options:{scales:{r:{beginAtZero:true,max:5}}}
   });
 }
 </script>
